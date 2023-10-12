@@ -1,4 +1,5 @@
 import inquirer, { Answers } from "inquirer";
+import chalk from "chalk";
 
 interface UserType {
   accNumber: number;
