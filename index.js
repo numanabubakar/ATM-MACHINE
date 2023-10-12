@@ -69,9 +69,9 @@ function SignUp() {
     answers.then((ans) => {
         const newUser = { accNumber: ans.AccNumber, pin: ans.Pin, balance: 0 };
         users.push(newUser);
-        currentUser = ans.accNumber;
+        currentUser = ans.AccNumber;
         console.log("Account Created");
-        console.log(users);
+        Home();
     });
 }
 LoginPage();
@@ -110,12 +110,14 @@ function Home() {
     });
 }
 function checkBalance() {
+    console.log(users);
+    console.log(currentUser);
     users.map((user) => {
-        if ((user.accNumber = currentUser)) {
-            console.log(`Your Current Ammount is : ${user.balance}`);
-            Home();
+        if (user.accNumber == currentUser) {
+            console.log(`Your Current Amount is : ${user.balance}`);
         }
     });
+    askTransaction();
 }
 function addBalance() {
     const answers = inquirer.prompt([
@@ -127,13 +129,13 @@ function addBalance() {
     ]);
     answers.then((ans) => {
         users.map((user) => {
-            if ((user.accNumber = currentUser)) {
+            if (user.accNumber == currentUser) {
                 user.balance = ans.bal;
                 console.log("Amount Added to your account");
                 transactions.push(`${ans.bal} amount added to your account`);
             }
         });
-        Home();
+        askTransaction();
     });
 }
 function withdrawBalance() {
@@ -146,7 +148,7 @@ function withdrawBalance() {
     ]);
     answers.then((ans) => {
         users.map((user) => {
-            if ((user.accNumber = currentUser)) {
+            if (user.accNumber == currentUser) {
                 if (user.balance < ans.bal) {
                     console.log("You Don't Have Enough Balance");
                 }
@@ -157,11 +159,30 @@ function withdrawBalance() {
                 }
             }
         });
-        Home();
+        askTransaction();
     });
 }
 function TransactionHistory() {
     transactions.map((item) => {
         console.log(item);
+    });
+    askTransaction();
+}
+function askTransaction() {
+    const answers = inquirer.prompt([
+        {
+            name: "selected",
+            type: "list",
+            choices: ["Yes", "No"],
+            message: "Do you want to do more transactions?",
+        },
+    ]);
+    answers.then((answer) => {
+        if (answer.selected == "Yes") {
+            Home();
+        }
+        else {
+            console.log("Thank Your For Using Our Bank ");
+        }
     });
 }
