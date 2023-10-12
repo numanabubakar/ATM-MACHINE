@@ -10,12 +10,18 @@ const users: UserType[] = [{ accNumber: 12345, pin: 1234, balance: 0 }];
 let currentUser: number;
 let transactions: string[] = [];
 function LoginPage() {
+  console.log(
+    chalk.bgRedBright.bold.italic(
+      "            WELCOME TO NUMAN'S BANKING SYSTEM!               "
+    )
+  );
+
   const answers: Promise<Answers> = inquirer.prompt([
     {
       name: "selected",
       type: "list",
       choices: ["LOGIN", "SIGN UP"],
-      message: "WELCOME TO ATM BANK",
+      message: "IF YOU HAVE ACCOUNT SELECT LOGIN ELSE GO FOR SIGNUP",
     },
   ]);
   answers.then((answers) => {
@@ -45,20 +51,24 @@ function Login() {
       if (user.accNumber == ans.AccNumber) {
         if (user.pin == ans.Pin) {
           currentUser = user.accNumber;
-          console.log("User Successfully login");
+          console.log(chalk.bgGreen.bold("Successfully login"));
           Home();
         } else {
-          console.log("incorrect Password");
+          console.log(chalk.bgRed.bold("Incorrect Password"));
         }
       } else {
-        console.log("Account Not Found");
+        console.log(chalk.bgRed.bold("Account Not Found"));
       }
     });
   });
 }
 
 function SignUp() {
-  console.log("Signup Page");
+  console.log(
+    chalk.bgMagentaBright.bold.underline(
+      "                    Signup Page                   "
+    )
+  );
 
   const answers: Promise<Answers> = inquirer.prompt([
     {
@@ -72,13 +82,21 @@ function SignUp() {
       message: "Enter Your Pin code : ",
     },
   ]);
-  answers.then((ans) => {
-    const newUser = { accNumber: ans.AccNumber, pin: ans.Pin, balance: 0 };
-    users.push(newUser);
-    currentUser = ans.AccNumber;
-    console.log("Account Created");
-    Home();
-  });
+  answers
+    .then((ans) => {
+      if (!ans.AccNumber) {
+        console.log(chalk.bgRed.bold("Invalid Account Number!"));
+      } else {
+        const newUser = { accNumber: ans.AccNumber, pin: ans.Pin, balance: 0 };
+        users.push(newUser);
+        currentUser = ans.AccNumber;
+        console.log(chalk.bgGreen.bold("Account Created"));
+        Home();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 LoginPage();

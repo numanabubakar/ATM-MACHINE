@@ -1,15 +1,16 @@
-// Develop a TS program that show the working of an ATM machine such
 import inquirer from "inquirer";
+import chalk from "chalk";
 const users = [{ accNumber: 12345, pin: 1234, balance: 0 }];
 let currentUser;
 let transactions = [];
 function LoginPage() {
+    console.log(chalk.bgRedBright.bold.italic("            WELCOME TO NUMAN'S BANKING SYSTEM!               "));
     const answers = inquirer.prompt([
         {
             name: "selected",
             type: "list",
             choices: ["LOGIN", "SIGN UP"],
-            message: "WELCOME TO ATM BANK",
+            message: "IF YOU HAVE ACCOUNT SELECT LOGIN ELSE GO FOR SIGNUP",
         },
     ]);
     answers.then((answers) => {
@@ -39,21 +40,21 @@ function Login() {
             if (user.accNumber == ans.AccNumber) {
                 if (user.pin == ans.Pin) {
                     currentUser = user.accNumber;
-                    console.log("User Successfully login");
+                    console.log(chalk.bgGreen.bold("Successfully login"));
                     Home();
                 }
                 else {
-                    console.log("incorrect Password");
+                    console.log(chalk.bgRed.bold("Incorrect Password"));
                 }
             }
             else {
-                console.log("Account Not Found");
+                console.log(chalk.bgRed.bold("Account Not Found"));
             }
         });
     });
 }
 function SignUp() {
-    console.log("Signup Page");
+    console.log(chalk.bgMagentaBright.bold.underline("                    Signup Page                   "));
     const answers = inquirer.prompt([
         {
             name: "AccNumber",
@@ -66,12 +67,21 @@ function SignUp() {
             message: "Enter Your Pin code : ",
         },
     ]);
-    answers.then((ans) => {
-        const newUser = { accNumber: ans.AccNumber, pin: ans.Pin, balance: 0 };
-        users.push(newUser);
-        currentUser = ans.AccNumber;
-        console.log("Account Created");
-        Home();
+    answers
+        .then((ans) => {
+        if (!ans.AccNumber) {
+            console.log(chalk.bgRed.bold("Invalid Account Number!"));
+        }
+        else {
+            const newUser = { accNumber: ans.AccNumber, pin: ans.Pin, balance: 0 };
+            users.push(newUser);
+            currentUser = ans.AccNumber;
+            console.log(chalk.bgGreen.bold("Account Created"));
+            Home();
+        }
+    })
+        .catch((err) => {
+        console.log(err);
     });
 }
 LoginPage();
@@ -130,7 +140,7 @@ function addBalance() {
     answers.then((ans) => {
         users.map((user) => {
             if (user.accNumber == currentUser) {
-                user.balance = ans.bal;
+                user.balance = user.balance + ans.bal;
                 console.log("Amount Added to your account");
                 transactions.push(`${ans.bal} amount added to your account`);
             }
@@ -182,7 +192,7 @@ function askTransaction() {
             Home();
         }
         else {
-            console.log("Thank Your For Using Our Bank ");
+            console.log("Thank Your For Using Our Bank and Hope We will See you Again :)");
         }
     });
 }
