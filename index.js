@@ -1,13 +1,8 @@
 // Develop a TS program that show the working of an ATM machine such
 import inquirer from "inquirer";
-//  - User should login by entering his/her unique account number and a secret PIN
-// - User can check account balance
-// - User can withdraw money
-// - User can check his/her previous transections in the current login
-// - User should be asked at the end of each function that if he/she wants to end transections or perform any other transections if the user choose more transections he/she must be shown all the options again and he / she can perform any transections.
-// In the current login means if user logged in and performed 5 transections he/she have an option to check these 5 transections
-// If he/she choosed to end the transections the data should be removed.
-const users = [{ accNumber: 12345, pin: 1234 }];
+const users = [{ accNumber: 12345, pin: 1234, balance: 0 }];
+let currentUser;
+let transactions = [];
 function LoginPage() {
     const answers = inquirer.prompt([
         {
@@ -43,7 +38,9 @@ function Login() {
         users.map((user) => {
             if (user.accNumber == ans.AccNumber) {
                 if (user.pin == ans.Pin) {
-                    console.log("User Succesffuly login");
+                    currentUser = user.accNumber;
+                    console.log("User Successfully login");
+                    Home();
                 }
                 else {
                     console.log("incorrect Password");
@@ -70,9 +67,101 @@ function SignUp() {
         },
     ]);
     answers.then((ans) => {
-        const newUser = { accNumber: ans.AccNumber, pin: ans.Pin };
+        const newUser = { accNumber: ans.AccNumber, pin: ans.Pin, balance: 0 };
         users.push(newUser);
+        currentUser = ans.accNumber;
         console.log("Account Created");
+        console.log(users);
     });
 }
 LoginPage();
+function Home() {
+    console.log("Enter Your Choice");
+    const answers = inquirer.prompt([
+        {
+            name: "func",
+            type: "list",
+            choices: [
+                "Check Balance",
+                "Add Balance",
+                "Withdraw Balance",
+                "Check Transaction History",
+            ],
+            message: "WELCOME TO ATM BANK",
+        },
+    ]);
+    answers.then((ans) => {
+        switch (ans.func) {
+            case "Check Balance":
+                checkBalance();
+                break;
+            case "Add Balance":
+                addBalance();
+                break;
+            case "Withdraw Balance":
+                withdrawBalance();
+                break;
+            case "Check Transaction History":
+                TransactionHistory();
+                break;
+            default:
+                break;
+        }
+    });
+}
+function checkBalance() {
+    users.map((user) => {
+        if ((user.accNumber = currentUser)) {
+            console.log(`Your Current Ammount is : ${user.balance}`);
+            Home();
+        }
+    });
+}
+function addBalance() {
+    const answers = inquirer.prompt([
+        {
+            name: "bal",
+            type: "number",
+            message: "Enter Balance you want to add into your account : ",
+        },
+    ]);
+    answers.then((ans) => {
+        users.map((user) => {
+            if ((user.accNumber = currentUser)) {
+                user.balance = ans.bal;
+                console.log("Amount Added to your account");
+                transactions.push(`${ans.bal} amount added to your account`);
+            }
+        });
+        Home();
+    });
+}
+function withdrawBalance() {
+    const answers = inquirer.prompt([
+        {
+            name: "bal",
+            type: "number",
+            message: "Enter Balance you want to Withdraw : ",
+        },
+    ]);
+    answers.then((ans) => {
+        users.map((user) => {
+            if ((user.accNumber = currentUser)) {
+                if (user.balance < ans.bal) {
+                    console.log("You Don't Have Enough Balance");
+                }
+                else {
+                    user.balance = user.balance - ans.bal;
+                    transactions.push(`${ans.bal} amount withdraw from your account`);
+                    console.log(`successfully ${ans.bal} Amount withdraw from your Account`);
+                }
+            }
+        });
+        Home();
+    });
+}
+function TransactionHistory() {
+    transactions.map((item) => {
+        console.log(item);
+    });
+}
