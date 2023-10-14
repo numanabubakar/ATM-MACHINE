@@ -12,7 +12,7 @@ let currentUser: number;
 let transactions: string[] = [];
 function LoginPage() {
   console.log(
-    chalk
+    chalk.black
       .bgHex("#e9edc9")
       .bold.italic(
         "            WELCOME TO NUMAN'S BANKING SYSTEM!               "
@@ -34,7 +34,7 @@ function LoginPage() {
       SignUp();
     } else {
       console.log(
-        chalk
+        chalk.black
           .bgHex("#83c5be")
           .bold(
             "Thank Your For Using Our Bank and Hope We will See you Again :)"
@@ -46,7 +46,7 @@ function LoginPage() {
 
 function Login() {
   console.log(
-    chalk
+    chalk.black
       .bgHex("#ccd5ae")
       .bold.underline("                    SIGN IN PAGE                   ")
   );
@@ -68,14 +68,18 @@ function Login() {
         if (user.pin == ans.Pin) {
           currentUser = user.accNumber;
           console.log(
-            chalk.bgHex("#80b918").bold("    Successfully login    ")
+            chalk.black.bgHex("#80b918").bold("    Successfully login    ")
           );
           Home();
         } else {
-          console.log(chalk.bgHex("#c1121f").bold("  Incorrect Password  "));
+          console.log(
+            chalk.black.bgHex("#c1121f").white.bold("  Incorrect Password  ")
+          );
         }
       } else {
-        console.log(chalk.bgHex("#c1121f").bold("Account Not Found"));
+        console.log(
+          chalk.black.bgHex("#c1121f").white.bold("Account Not Found")
+        );
       }
     });
   });
@@ -83,7 +87,7 @@ function Login() {
 
 function SignUp() {
   console.log(
-    chalk
+    chalk.black
       .bgHex("#ccd5ae")
       .bold.underline("                    SIGN UP PAGE                   ")
   );
@@ -103,13 +107,15 @@ function SignUp() {
   answers
     .then((ans) => {
       if (!ans.AccNumber) {
-        console.log(chalk.bgHex("#c1121f").bold("Invalid Account Number!"));
+        console.log(
+          chalk.black.bgHex("#c1121f").white.bold("Invalid Account Number!")
+        );
       } else {
         const newUser = { accNumber: ans.AccNumber, pin: ans.Pin, balance: 0 };
         users.push(newUser);
         currentUser = ans.AccNumber;
         console.log(
-          chalk
+          chalk.black
             .bgHex("#80b918")
             .bold("          Account Created Successfully!               ")
         );
@@ -125,7 +131,7 @@ LoginPage();
 
 function Home() {
   console.log(
-    chalk
+    chalk.black
       .bgHex("#ccd5ae")
       .bold.underline("                Select Your Choice             ")
   );
@@ -171,7 +177,7 @@ function checkBalance() {
   users.map((user) => {
     if (user.accNumber == currentUser) {
       console.log(
-        chalk
+        chalk.black
           .bgHex("#a2d2ff")
           .bold(`  Your Current Amount is : ${user.balance}    `)
       );
@@ -181,7 +187,7 @@ function checkBalance() {
 }
 function addBalance() {
   console.log(
-    chalk
+    chalk.black
       .bgHex("#ccd5ae")
       .bold.underline("       ADD BALANCE TO YOUR ACCOUNT         ")
   );
@@ -199,7 +205,7 @@ function addBalance() {
       if (user.accNumber == currentUser) {
         user.balance = user.balance + ans.bal;
         console.log(
-          chalk
+          chalk.black
             .bgHex("#80b918")
             .bold(`${ans.bal} Amount successfully Added to your account`)
         );
@@ -223,14 +229,16 @@ function withdrawBalance() {
       if (user.accNumber == currentUser) {
         if (user.balance < ans.bal) {
           console.log(
-            chalk.bgHex("#c1121f").bold("You Don't Have Enough Balance")
+            chalk.black
+              .bgHex("#c1121f")
+              .white.bold("You Don't Have Enough Balance")
           );
         } else {
           user.balance = user.balance - ans.bal;
           transactions.push(`${ans.bal} amount withdraw from your account`);
 
           console.log(
-            chalk
+            chalk.black
               .bgHex("#80b918")
               .bold(`successfully ${ans.bal} Amount withdraw from your Account`)
           );
@@ -243,13 +251,13 @@ function withdrawBalance() {
 function TransactionHistory() {
   if (transactions.length == 0) {
     console.log(
-      chalk.bgYellow.bold(
+      chalk.black.bgYellow.bold(
         "        you have not made any transaction!          "
       )
     );
   } else {
     transactions.map((item, i) => {
-      console.log(chalk.bgHex("#ccd5ae").bold(`${i + 1}. ${item}`));
+      console.log(chalk.black.bgHex("#ccd5ae").bold(`${i + 1}. ${item}`));
     });
   }
   askTransaction();
@@ -268,13 +276,7 @@ function askTransaction() {
     if (answer.selected == "Yes") {
       Home();
     } else {
-      console.log(
-        chalk
-          .bgHex("#83c5be")
-          .bold(
-            "Thank Your For Using Our Bank and Hope We will See you Again :)"
-          )
-      );
+      LoginPage();
     }
   });
 }
