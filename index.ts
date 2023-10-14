@@ -6,10 +6,13 @@ interface UserType {
   accNumber: number;
   pin: number;
   balance: number;
+  transactions: string[];
 }
-const users: UserType[] = [{ accNumber: 12345, pin: 1234, balance: 0 }];
+const users: UserType[] = [
+  { accNumber: 12345, pin: 1234, balance: 0, transactions: [] },
+];
 let currentUser: number;
-let transactions: string[] = [];
+// let transactions: string[] = [];
 function LoginPage() {
   console.log(
     chalk.black
@@ -76,12 +79,11 @@ function Login() {
             chalk.black.bgHex("#c1121f").white.bold("  Incorrect Password  ")
           );
         }
-      } else {
-        console.log(
-          chalk.black.bgHex("#c1121f").white.bold("Account Not Found")
-        );
       }
     });
+    if (!currentUser) {
+      console.log(chalk.black.bgHex("#c1121f").white.bold("Account Not Found"));
+    }
   });
 }
 
@@ -111,7 +113,12 @@ function SignUp() {
           chalk.black.bgHex("#c1121f").white.bold("Invalid Account Number!")
         );
       } else {
-        const newUser = { accNumber: ans.AccNumber, pin: ans.Pin, balance: 0 };
+        const newUser = {
+          accNumber: ans.AccNumber,
+          pin: ans.Pin,
+          balance: 0,
+          transactions: [],
+        };
         users.push(newUser);
         currentUser = ans.AccNumber;
         console.log(
@@ -209,7 +216,7 @@ function addBalance() {
             .bgHex("#80b918")
             .bold(`${ans.bal} Amount successfully Added to your account`)
         );
-        transactions.push(`${ans.bal} amount added to your account`);
+        user.transactions.push(`${ans.bal} amount added to your account`);
       }
     });
     askTransaction();
@@ -235,7 +242,9 @@ function withdrawBalance() {
           );
         } else {
           user.balance = user.balance - ans.bal;
-          transactions.push(`${ans.bal} amount withdraw from your account`);
+          user.transactions.push(
+            `${ans.bal} amount withdraw from your account`
+          );
 
           console.log(
             chalk.black
@@ -249,17 +258,21 @@ function withdrawBalance() {
   });
 }
 function TransactionHistory() {
-  if (transactions.length == 0) {
-    console.log(
-      chalk.black.bgYellow.bold(
-        "        you have not made any transaction!          "
-      )
-    );
-  } else {
-    transactions.map((item, i) => {
-      console.log(chalk.black.bgHex("#ccd5ae").bold(`${i + 1}. ${item}`));
-    });
-  }
+  users.map((user) => {
+    if (user.accNumber == currentUser) {
+      if (user.transactions.length == 0) {
+        console.log(
+          chalk.black.bgYellow.bold(
+            "        you have not made any transaction!          "
+          )
+        );
+      } else {
+        user.transactions.map((item, i) => {
+          console.log(chalk.black.bgHex("#ccd5ae").bold(`${i + 1}. ${item}`));
+        });
+      }
+    }
+  });
   askTransaction();
 }
 
