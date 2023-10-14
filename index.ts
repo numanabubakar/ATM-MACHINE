@@ -165,6 +165,10 @@ function checkBalance() {
   askTransaction();
 }
 function addBalance() {
+  console.log(
+    chalk.bold.bgYellowBright("       ADD BALANCE TO YOUR ACCOUNT         ")
+  );
+
   const answers: Promise<Answers> = inquirer.prompt([
     {
       name: "bal",
@@ -177,7 +181,9 @@ function addBalance() {
     users.map((user) => {
       if (user.accNumber == currentUser) {
         user.balance = user.balance + ans.bal;
-        console.log("Amount Added to your account");
+        console.log(
+          chalk.bgBlue.bold(`${ans.bal} Amount Added to your account`)
+        );
         transactions.push(`${ans.bal} amount added to your account`);
       }
     });
@@ -212,9 +218,15 @@ function withdrawBalance() {
   });
 }
 function TransactionHistory() {
-  transactions.map((item) => {
-    console.log(item);
-  });
+  if (!transactions) {
+    console.log(
+      chalk.bgYellow("        you have not made any transaction!          ")
+    );
+  } else {
+    transactions.map((item) => {
+      console.log(item);
+    });
+  }
   askTransaction();
 }
 

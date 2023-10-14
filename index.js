@@ -97,6 +97,7 @@ function Home() {
                 "Add Balance",
                 "Withdraw Balance",
                 "Check Transaction History",
+                "LOGOUT",
             ],
             message: "Numan's Banking System",
         },
@@ -115,6 +116,8 @@ function Home() {
             case "Check Transaction History":
                 TransactionHistory();
                 break;
+            case "LOGOUT":
+                LoginPage();
             default:
                 break;
         }
@@ -129,6 +132,7 @@ function checkBalance() {
     askTransaction();
 }
 function addBalance() {
+    console.log(chalk.bold.bgYellowBright("       ADD BALANCE TO YOUR ACCOUNT         "));
     const answers = inquirer.prompt([
         {
             name: "bal",
@@ -140,7 +144,7 @@ function addBalance() {
         users.map((user) => {
             if (user.accNumber == currentUser) {
                 user.balance = user.balance + ans.bal;
-                console.log("Amount Added to your account");
+                console.log(chalk.green.bold(`${ans.bal} Amount Added to your account`));
                 transactions.push(`${ans.bal} amount added to your account`);
             }
         });
