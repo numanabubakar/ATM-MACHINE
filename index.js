@@ -50,7 +50,7 @@ function Login() {
             if (user.accNumber == ans.AccNumber) {
                 if (user.pin == ans.Pin) {
                     currentUser = user.accNumber;
-                    console.log(chalk.bgHex("#38b000").bold("    Successfully login    "));
+                    console.log(chalk.bgHex("#80b918").bold("    Successfully login    "));
                     Home();
                 }
                 else {
@@ -64,7 +64,9 @@ function Login() {
     });
 }
 function SignUp() {
-    console.log(chalk.bgMagentaBright.bold.underline("                    SIGN UP PAGE                   "));
+    console.log(chalk
+        .bgHex("#ccd5ae")
+        .bold.underline("                    SIGN UP PAGE                   "));
     const answers = inquirer.prompt([
         {
             name: "AccNumber",
@@ -87,7 +89,7 @@ function SignUp() {
             users.push(newUser);
             currentUser = ans.AccNumber;
             console.log(chalk
-                .bgHex("#38b000")
+                .bgHex("#80b918")
                 .bold("          Account Created Successfully!               "));
             Home();
         }
@@ -98,7 +100,9 @@ function SignUp() {
 }
 LoginPage();
 function Home() {
-    console.log(chalk.bgRedBright.bold.underline("                Select Your Choice             "));
+    console.log(chalk
+        .bgHex("#ccd5ae")
+        .bold.underline("                Select Your Choice             "));
     const answers = inquirer.prompt([
         {
             name: "func",
@@ -145,7 +149,9 @@ function checkBalance() {
     askTransaction();
 }
 function addBalance() {
-    console.log(chalk.bold.bgYellowBright("       ADD BALANCE TO YOUR ACCOUNT         "));
+    console.log(chalk
+        .bgHex("#ccd5ae")
+        .bold.underline("       ADD BALANCE TO YOUR ACCOUNT         "));
     const answers = inquirer.prompt([
         {
             name: "bal",
@@ -157,7 +163,9 @@ function addBalance() {
         users.map((user) => {
             if (user.accNumber == currentUser) {
                 user.balance = user.balance + ans.bal;
-                console.log(chalk.bgBlue.bold(`${ans.bal} Amount Added to your account`));
+                console.log(chalk
+                    .bgHex("#80b918")
+                    .bold(`${ans.bal} Amount successfully Added to your account`));
                 transactions.push(`${ans.bal} amount added to your account`);
             }
         });
@@ -176,12 +184,14 @@ function withdrawBalance() {
         users.map((user) => {
             if (user.accNumber == currentUser) {
                 if (user.balance < ans.bal) {
-                    console.log(chalk.bgHex("#04dbdb").bold("You Don't Have Enough Balance"));
+                    console.log(chalk.bgHex("#c1121f").bold("You Don't Have Enough Balance"));
                 }
                 else {
                     user.balance = user.balance - ans.bal;
                     transactions.push(`${ans.bal} amount withdraw from your account`);
-                    console.log(`successfully ${ans.bal} Amount withdraw from your Account`);
+                    console.log(chalk
+                        .bgHex("#80b918")
+                        .bold(`successfully ${ans.bal} Amount withdraw from your Account`));
                 }
             }
         });
@@ -194,7 +204,7 @@ function TransactionHistory() {
     }
     else {
         transactions.map((item, i) => {
-            console.log(chalk.bgHex("#f6bd60").bold(`${i + 1}. ${item}`));
+            console.log(chalk.bgHex("#ccd5ae").bold(`${i + 1}. ${item}`));
         });
     }
     askTransaction();
