@@ -68,8 +68,8 @@ function Login() {
   answers.then((ans) => {
     users.map((user) => {
       if (user.accNumber == ans.AccNumber) {
+        currentUser = user.accNumber;
         if (user.pin == ans.Pin) {
-          currentUser = user.accNumber;
           console.log(
             chalk.black.bgHex("#80b918").bold("    Successfully login    ")
           );
@@ -78,11 +78,13 @@ function Login() {
           console.log(
             chalk.black.bgHex("#c1121f").white.bold("  Incorrect Password  ")
           );
+          Login();
         }
       }
     });
     if (currentUser == 0) {
       console.log(chalk.black.bgHex("#c1121f").white.bold("Account Not Found"));
+      LoginPage();
     }
   });
 }
