@@ -1,5 +1,5 @@
 import inquirer, { Answers } from "inquirer";
-import chalk from "chalk";
+import chalk, { Chalk } from "chalk";
 
 interface UserType {
   accNumber: number;
@@ -34,6 +34,11 @@ function LoginPage() {
 }
 
 function Login() {
+  console.log(
+    chalk.bgMagentaBright.bold.underline(
+      "                    SignIn Page                   "
+    )
+  );
   const answers: Promise<Answers> = inquirer.prompt([
     {
       name: "AccNumber",
@@ -90,7 +95,11 @@ function SignUp() {
         const newUser = { accNumber: ans.AccNumber, pin: ans.Pin, balance: 0 };
         users.push(newUser);
         currentUser = ans.AccNumber;
-        console.log(chalk.bgGreen.bold("Account Created"));
+        console.log(
+          chalk.bgGreenBright.bold(
+            "          Account Created Successfully!               "
+          )
+        );
         Home();
       }
     })
@@ -102,7 +111,11 @@ function SignUp() {
 LoginPage();
 
 function Home() {
-  console.log("Enter Your Choice");
+  console.log(
+    chalk.bgRedBright.bold.underline(
+      "                Select Your Choice             "
+    )
+  );
   const answers: Promise<Answers> = inquirer.prompt([
     {
       name: "func",
@@ -113,7 +126,7 @@ function Home() {
         "Withdraw Balance",
         "Check Transaction History",
       ],
-      message: "WELCOME TO ATM BANK",
+      message: "Numan's Banking System",
     },
   ]);
 
@@ -139,12 +152,11 @@ function Home() {
 }
 
 function checkBalance() {
-  console.log(users);
-  console.log(currentUser);
-
   users.map((user) => {
     if (user.accNumber == currentUser) {
-      console.log(`Your Current Amount is : ${user.balance}`);
+      console.log(
+        chalk.bgCyan(`  Your Current Amount is : ${user.balance}    `)
+      );
     }
   });
   askTransaction();
