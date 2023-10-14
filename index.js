@@ -144,7 +144,7 @@ function addBalance() {
         users.map((user) => {
             if (user.accNumber == currentUser) {
                 user.balance = user.balance + ans.bal;
-                console.log(chalk.green.bold(`${ans.bal} Amount Added to your account`));
+                console.log(chalk.bgBlue.bold(`${ans.bal} Amount Added to your account`));
                 transactions.push(`${ans.bal} amount added to your account`);
             }
         });
@@ -176,9 +176,14 @@ function withdrawBalance() {
     });
 }
 function TransactionHistory() {
-    transactions.map((item) => {
-        console.log(item);
-    });
+    if (transactions.length == 0) {
+        console.log(chalk.bgYellow.bold("        you have not made any transaction!          "));
+    }
+    else {
+        transactions.map((item) => {
+            console.log(item);
+        });
+    }
     askTransaction();
 }
 function askTransaction() {

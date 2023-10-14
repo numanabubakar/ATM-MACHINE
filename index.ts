@@ -218,9 +218,11 @@ function withdrawBalance() {
   });
 }
 function TransactionHistory() {
-  if (!transactions) {
+  if (transactions.length == 0) {
     console.log(
-      chalk.bgYellow("        you have not made any transaction!          ")
+      chalk.bgYellow.bold(
+        "        you have not made any transaction!          "
+      )
     );
   } else {
     transactions.map((item) => {
