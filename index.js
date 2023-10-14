@@ -5,8 +5,8 @@ const users = [
     { accNumber: 12345, pin: 1234, balance: 0, transactions: [] },
 ];
 let currentUser;
-// let transactions: string[] = [];
 function LoginPage() {
+    currentUser = 0;
     console.log(chalk.black
         .bgHex("#e9edc9")
         .bold.italic("            WELCOME TO NUMAN'S BANKING SYSTEM!               "));
@@ -61,7 +61,7 @@ function Login() {
                 }
             }
         });
-        if (!currentUser) {
+        if (currentUser == 0) {
             console.log(chalk.black.bgHex("#c1121f").white.bold("Account Not Found"));
         }
     });

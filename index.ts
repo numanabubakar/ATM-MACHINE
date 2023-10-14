@@ -12,8 +12,8 @@ const users: UserType[] = [
   { accNumber: 12345, pin: 1234, balance: 0, transactions: [] },
 ];
 let currentUser: number;
-// let transactions: string[] = [];
 function LoginPage() {
+  currentUser = 0;
   console.log(
     chalk.black
       .bgHex("#e9edc9")
@@ -81,7 +81,7 @@ function Login() {
         }
       }
     });
-    if (!currentUser) {
+    if (currentUser == 0) {
       console.log(chalk.black.bgHex("#c1121f").white.bold("Account Not Found"));
     }
   });
