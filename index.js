@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 import inquirer from "inquirer";
 import chalk from "chalk";
 const users = [{ accNumber: 12345, pin: 1234, balance: 0 }];

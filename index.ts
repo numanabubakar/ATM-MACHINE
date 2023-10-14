@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 import inquirer, { Answers } from "inquirer";
 import chalk from "chalk";
 
