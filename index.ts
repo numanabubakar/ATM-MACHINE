@@ -125,6 +125,7 @@ function Home() {
         "Add Balance",
         "Withdraw Balance",
         "Check Transaction History",
+        "LOGOUT",
       ],
       message: "Numan's Banking System",
     },
@@ -144,6 +145,8 @@ function Home() {
       case "Check Transaction History":
         TransactionHistory();
         break;
+      case "LOGOUT":
+        LoginPage();
 
       default:
         break;
