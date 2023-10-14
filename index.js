@@ -121,11 +121,9 @@ function Home() {
     });
 }
 function checkBalance() {
-    console.log(users);
-    console.log(currentUser);
     users.map((user) => {
         if (user.accNumber == currentUser) {
-            console.log(chalk.bgCyan(`Your Current Amount is : ${user.balance}`));
+            console.log(chalk.bgCyan(`  Your Current Amount is : ${user.balance}    `));
         }
     });
     askTransaction();
